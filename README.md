@@ -1,98 +1,187 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+🚗 Uber-Service (Logging & Rider Coordinates Microservice)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A NestJS-based microservice designed to log and manage rider coordinates for an Uber-like system.
+It uses MongoDB as the primary data store and communicates via NestJS microservice messaging (TCP transport) with other services (e.g., Rider Service).
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+🧩 Overview
 
-## Description
+The Uber-Service application handles logging of rider coordinates and fetching them on demand.
+It’s a part of a distributed system where different microservices (e.g., Rider Service) communicate with each other using TCP-based NestJS microservices.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+⚙️ Core Features
 
-## Project setup
+Store and retrieve rider GPS coordinates.
 
-```bash
-$ npm install
-```
+Communicate with the Rider microservice via TCP.
 
-## Compile and run the project
+Built using NestJS, Mongoose, and MongoDB.
 
-```bash
-# development
-$ npm run start
+Follows clean, modular microservice architecture.
 
-# watch mode
-$ npm run start:dev
+🏗️ Project Structure
+uber-services/
+│
+├── apps/
+│   ├── logging/                       # Logging microservice
+│   │   ├── src/
+│   │   │   ├── logging.module.ts
+│   │   │   ├── logging.controller.ts
+│   │   │   ├── rider-coordinates/
+│   │   │   │   ├── dto/create-cordinates.dto.ts
+│   │   │   │   ├── schemas/rider-coordinates.schema.ts
+│   │   │   │   ├── rider-coordinates.controller.ts
+│   │   │   │   ├── rider-coordinates.service.ts
+│   │   │   │   └── rider-coordinates.module.ts
+│   │   │   └── main.ts
+│   │   └── ...
+│   └── rider/                         # Rider microservice
+│       ├── src/
+│       │   ├── rider.module.ts
+│       │   ├── rider.controller.ts
+│       │   ├── rider.service.ts
+│       │   └── main.ts
+│
+└── package.json
 
-# production mode
-$ npm run start:prod
-```
+🧠 Technologies Used
+Technology	Purpose
+NestJS	Framework for modular microservice architecture
+MongoDB + Mongoose	Data persistence for rider coordinates
+Node.js	Runtime environment
+Docker	MongoDB containerization
+Postman / HTTP	API testing and requests
+TCP Transport (NestJS)	Inter-service communication
+🚀 Getting Started
+1️⃣ Clone the Repository
+git clone https://github.com/<your-username>/uber-services.git
+cd uber-services
 
-## Run tests
+2️⃣ Start MongoDB (Docker)
 
-```bash
-# unit tests
-$ npm run test
+Make sure MongoDB is running in Docker:
 
-# e2e tests
-$ npm run test:e2e
+docker run -d \
+  --name mongo_container \
+  -p 27017:27017 \
+  mongo:7.0
 
-# test coverage
-$ npm run test:cov
-```
 
-## Deployment
+Verify it’s running:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+docker ps
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+You should see:
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+mongo_container ... Up ... 0.0.0.0:27017->27017/tcp
 
-## Resources
+3️⃣ Install Dependencies
+npm install
 
-Check out a few resources that may come in handy when working with NestJS:
+4️⃣ Run the Microservices
+Start the Rider Microservice
+npm run start:rider
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
 
-## Support
+It should log:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Rider microservice is listening on 127.0.0.1:3000
 
-## Stay in touch
+Start the Logging Microservice
+npm run start:logging
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## License
+It should log:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+[NestApplication] Nest application successfully started
+
+🧾 API Endpoints
+➕ Create Rider Coordinate
+
+POST http://localhost:5000/rider-coordinates
+
+Request Body:
+
+{
+  "latitude": 64582.54,
+  "longitude": 134143546,
+  "riderId": "6726b9b3b4a24a8cf8fce124"
+}
+
+
+Response:
+
+{
+  "_id": "6908b8ef5793ccd181119386",
+  "latitude": 64582.54,
+  "longitude": 134143546,
+  "riderId": "6726b9b3b4a24a8cf8fce124",
+  "__v": 0
+}
+
+📍 Get Rider Coordinates by ID
+
+GET http://localhost:5000/rider-coordinates/:riderId
+
+Example:
+
+GET http://localhost:5000/rider-coordinates/6726b9b3b4a24a8cf8fce124
+
+
+Response:
+
+{
+  "coordinates": [
+    {
+      "_id": "6908b8ef5793ccd181119386",
+      "latitude": 64582.54,
+      "longitude": 134143546,
+      "riderId": "6726b9b3b4a24a8cf8fce124"
+    }
+  ],
+  "rider": {
+    "_id": "6726b9b3b4a24a8cf8fce124",
+    "name": "John Doe",
+    "email": "john.doe@example.com"
+  }
+}
+
+🌍 Get All Rider Coordinates
+
+GET http://localhost:5000/rider-coordinates/all
+
+Response:
+
+[
+  {
+    "_id": "6908b8ef5793ccd181119386",
+    "latitude": 64582.54,
+    "longitude": 134143546,
+    "riderId": "6726b9b3b4a24a8cf8fce124"
+  },
+  {
+    "_id": "69089d0d96663b6a67c471e4",
+    "latitude": 64582,
+    "longitude": 13243546,
+    "riderId": "6726b9b3b4a24a8cf8fce124"
+  }
+]
+
+🧩 Microservice Communication
+
+Logging Service (Port 5000) — handles coordinate storage and retrieval.
+
+Rider Service (Port 3000) — provides rider data to the logging service.
+
+Communication between services uses NestJS TCP transport.
+
+🧰 Troubleshooting
+Problem	Solution
+ECONNREFUSED 127.0.0.1:3000	Ensure the Rider microservice is running and listening on port 3000.
+MongoNetworkError	Make sure MongoDB is running (via Docker or local installation).
+Empty coordinates array	Check that riderId in the saved data matches the queried ID.
+🧑‍💻 Author
+
+Lecksikerm
+Developer & Backend Engineer
+GitHub: @Lecksikerm
