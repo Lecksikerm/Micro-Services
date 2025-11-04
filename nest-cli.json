@@ -7,15 +7,6 @@
     "webpack": true,
     "tsConfigPath": "apps/uber-services/tsconfig.app.json"
   },
-  "rider-service": {
-    "type": "application",
-    "root": "apps/rider-service",
-    "entryFile": "main",
-    "sourceRoot": "apps/rider-service/src",
-    "compilerOptions": {
-      "tsConfigPath": "apps/rider-service/tsconfig.app.json"
-    }
-  },
   "uber-services": {
     "type": "application",
     "root": "apps/uber-services",
@@ -35,6 +26,15 @@
       "sourceRoot": "apps/logging/src",
       "compilerOptions": {
         "tsConfigPath": "apps/logging/tsconfig.app.json"
+      }
+    },
+    "rider": {
+      "type": "application",
+      "root": "apps/rider",
+      "entryFile": "main",
+      "sourceRoot": "apps/rider/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/rider/tsconfig.app.json"
       }
     },
     "uber-services": {
