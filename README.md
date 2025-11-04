@@ -53,7 +53,7 @@ Postman / HTTP	API testing and requests
 TCP Transport (NestJS)	Inter-service communication
 🚀 Getting Started
 1️⃣ Clone the Repository
-git clone https://github.com/<your-username>/uber-services.git
+git clone https://github.com/<Lecksikerm>/uber-services.git
 cd uber-services
 
 2️⃣ Start MongoDB (Docker)
